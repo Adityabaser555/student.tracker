@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Expense Tracker: record, filter and analyse your spending.">
+  <title>Student Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Student Expense Tracker</h1>
+      <p class="muted">Record what you spend, set a monthly budget, and see where your money goes.</p>
+    </header>
+
+    <section class="stats" aria-live="polite">
+      <div class="card stat"><span class="muted">Total spent</span><strong id="total">₹0.00</strong></div>
+      <div class="card stat"><span class="muted">This month</span><strong id="month">₹0.00</strong></div>
+      <div class="card stat"><span class="muted">Expenses</span><strong id="count">0</strong></div>
+    </section>
+
+    <section class="card">
+      <div class="budget-head">
+        <h2>Monthly budget</h2>
+        <label class="budget-input">₹ <input type="number" id="budget" min="0" step="100" inputmode="decimal" placeholder="Set budget" aria-label="Monthly budget in rupees"></label>
+      </div>
+      <div class="progress" aria-hidden="true"><i id="budgetBar"></i></div>
+      <p id="budgetText" class="muted">Set a budget to track this month's spending.</p>
+    </section>
+
+    <div class="two-col">
+      <section class="card">
+        <h2 id="formTitle">Add expense</h2>
+        <form id="expenseForm" novalidate>
+          <div class="field">
+            <label for="title">Description</label>
+            <input type="text" id="title" maxlength="40" placeholder="e.g. Canteen lunch" autocomplete="off">
+            <small class="error" id="titleError"></small>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="amount">Amount (₹)</label>
+              <input type="number" id="amount" min="0" step="0.01" inputmode="decimal">
+              <small class="error" id="amountError"></small>
+            </div>
+            <div class="field">
+              <label for="date">Date</label>
+              <input type="date" id="date">
+              <small class="error" id="dateError"></small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="category">Category</label>
+            <select id="category"></select>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn" id="submitBtn">Add expense</button>
+            <button type="button" class="btn outline" id="cancelEdit" hidden>Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Spending by category</h2>
+        <div class="chart-wrap">
+          <div class="donut" id="donut" role="img" aria-label="Spending by category chart"><span id="donutTotal">₹0</span></div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="list-head">
+        <h2>All expenses</h2>
+        <div class="btn-row">
+          <button id="exportBtn" class="btn outline small">Export CSV</button>
+          <button id="clearAll" class="btn outline small">Clear all</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Search description" aria-label="Search expenses">
+        <select id="filterCat" aria-label="Filter by category"></select>
+        <select id="sortBy" aria-label="Sort expenses">
+          <option value="new">Newest first</option>
+          <option value="old">Oldest first</option>
+          <option value="high">Highest amount</option>
+          <option value="low">Lowest amount</option>
+        </select>
+      </div>
+      <ul id="list" class="list"></ul>
+    </section>
+
+    <footer class="muted">Data is saved only in this browser (localStorage). Clearing browser data will remove it.</footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
